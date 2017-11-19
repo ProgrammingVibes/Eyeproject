@@ -18,7 +18,7 @@ import pyttsx
 import autocomplete
 import winsound
 import os.path
-import openGoogle
+import siteSearch
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -438,11 +438,14 @@ class Ui_Dialog(object):
         self.pushButton_3.setGeometry(QtCore.QRect(10, 470, 75, 23))
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
         self.pushButton_4 = QtGui.QPushButton(Dialog)
-        self.pushButton_4.setGeometry(QtCore.QRect(10, 330, 381, 23))
+        self.pushButton_4.setGeometry(QtCore.QRect(10, 420, 181, 23))
         self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.pushButton_5 = QtGui.QPushButton(Dialog)
+        self.pushButton_5.setGeometry(QtCore.QRect(210, 420, 181, 23))
+        self.pushButton_5.setObjectName(_fromUtf8("pushButton_5"))
         #words to search box
         self.textBrowser_2 = QtGui.QTextBrowser(Dialog)
-        self.textBrowser_2.setGeometry(QtCore.QRect(10, 370, 381, 91))
+        self.textBrowser_2.setGeometry(QtCore.QRect(10, 320, 381, 91))
         self.textBrowser_2.setObjectName(_fromUtf8("textBrowser_2"))
         #word predictor box
         self.textBrowser_3 = QtGui.QTextBrowser(Dialog)
@@ -453,9 +456,10 @@ class Ui_Dialog(object):
         self.pushButton_2.clicked.connect(self.addSpace)
         self.pushButton_3.clicked.connect(self.pauseBut)
         self.pushButton_4.clicked.connect(self.googleBut)
+        self.pushButton_5.clicked.connect(self.wikiBut)
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-        self.buts=[[self.pushButton, self.textBrowser_3, self.pushButton_2], [self.pushButton_4]]
+        self.buts=[[self.pushButton, self.textBrowser_3, self.pushButton_2], [self.pushButton_4,self.pushButton_5]]
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
@@ -463,6 +467,7 @@ class Ui_Dialog(object):
         self.pushButton_2.setText(_translate("Dialog", "SPACE", None))
         self.pushButton_3.setText(_translate("Dialog", "PAUSE", None))
         self.pushButton_4.setText(_translate("Dialog", "GOOGLE", None))
+        self.pushButton_5.setText(_translate("Dialog","WIKI",None))
         self.textBrowser_3.setText(_translate("MainWindow", "...", None))
         self.textBrowser_3.setAlignment(QtCore.Qt.AlignCenter)
         self.textBrowser_3.setFont(QtGui.QFont("MS Shell Dlg 2", 18))
@@ -568,7 +573,9 @@ class Ui_Dialog(object):
             currentSentence=" ".join(words)+" "
             self.textBrowser_2.setText(currentSentence)
     def googleBut(self):
-        openGoogle.openGoogle(currentSentence)
+        siteSearch.siteSearch(siteSearch.website("google"),currentSentence)
+    def wikiBut(self):
+        siteSearch.siteSearch(siteSearch.website("wiki"),currentSentence)
 
 if __name__ == "__main__":
     import sys
@@ -578,7 +585,7 @@ if __name__ == "__main__":
     ui = Ui_Dialog()
     ui.setupUi(MainWindow)
     row5={0:ui.delLet, 1:ui.getPredWord, 2:ui.addSpace}
-    row6={0:ui.googleBut}
+    row6={0:ui.googleBut, 1:ui.wikiBut}
     MainWindow.show()
     timer = QTimer()
     timer.timeout.connect(tick)
